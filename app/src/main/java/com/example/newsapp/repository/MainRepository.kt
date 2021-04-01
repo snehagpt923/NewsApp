@@ -14,7 +14,7 @@ class MainRepository constructor(
 ) {
     suspend fun getNews(): Flow<DataState<List<News>>> = flow {
         emit(DataState.Loading)
-        delay(1000)
+        delay(500)
         try {
             val networkNews = newsApiService.getNews()
             val newsList = networkMapper.mapFromEntityList(networkNews)

@@ -36,16 +36,14 @@ class NewsListViewModel @Inject constructor(private val mainRepository: MainRepo
     }
 
     fun sortNewsListBy(sortBy: SortBy) {
-        val newsList = newsLiveData.value as DataState.Success<List<News>>
-        when (sortBy) {
-            is SortBy.Popular -> {
-                newsLiveData.value = newsList
-            }
-            is SortBy.Recent -> {
-
-            }
-            else -> {
-
+        (newsLiveData.value as? DataState.Success<List<News>>)?.data?.let { newsList ->
+            newsLiveData.value = when (sortBy) {
+                is SortBy.Popular -> {
+                    DataState.Success(newsList.sortedBy { it.rank })
+                }
+                else -> {
+                    DataState.Success(newsList.sortedByDescending { it.creationTime })
+                }
             }
         }
     }

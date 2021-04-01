@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.newsapp.R
 import com.example.newsapp.domain.News
 import com.example.newsapp.utils.DataState
+import com.example.newsapp.utils.Utility.SortBy.*
 import com.example.newsapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_news.*
-
 
 @AndroidEntryPoint
 class NewsListActivity : AppCompatActivity(), NewsListRecyclerViewAdapter.ItemClickListener {
@@ -45,7 +45,7 @@ class NewsListActivity : AppCompatActivity(), NewsListRecyclerViewAdapter.ItemCl
 
     private fun displayError(message: String?) {
         if (message != null) {
-            tv_error.visibility = View.GONE
+            tv_error.visibility = View.VISIBLE
             tv_error.text = message
         } else {
             tv_error.text = ""
@@ -75,9 +75,11 @@ class NewsListActivity : AppCompatActivity(), NewsListRecyclerViewAdapter.ItemCl
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.recent -> {
+                viewModel.sortNewsListBy(Recent)
                 true
             }
             R.id.popular -> {
+                viewModel.sortNewsListBy(Popular)
                 true
             }
             else -> super.onOptionsItemSelected(item);

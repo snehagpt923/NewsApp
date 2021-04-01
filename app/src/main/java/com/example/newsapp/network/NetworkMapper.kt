@@ -29,6 +29,6 @@ class NetworkMapper
     }
 
     fun mapFromEntityList(entities: List<NewsNetworkEntity>): List<News> {
-        return entities.map { mapFromEntity(it) }
+        return entities.map { mapFromEntity(it) }.sortedByDescending { it.creationTime }
     }
 }
